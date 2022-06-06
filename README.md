@@ -1,7 +1,7 @@
 <h1 align=center>Dockette / Hashicorp</h1>
 
 <p align=center>
-   ▲ Docker image with preinstalled Nomad, Consul, Levant, Vault, Terraform, Packer and Waypoint.
+   🐳 Docker image with preinstalled Nomad, Consul, Levant, Vault, Terraform, Packer and Waypoint.
 </p>
 
 <p align=center>
