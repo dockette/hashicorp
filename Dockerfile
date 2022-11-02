@@ -27,14 +27,14 @@ RUN chmod +x /hashicorp/*
 
 FROM alpine:3.16
 
-ENV GLIBC_VERSION=2.25-r0
+ENV GLIBC_VERSION=2.35-r0
 
 ADD https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub /etc/apk/keys/sgerrand.rsa.pub
 ADD https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk glibc.apk
 
 RUN apk update && \
     apk upgrade && \
-    apk --no-cache add bash curl make git glibc.apk  && \
+    apk --no-cache --force-overwrite add bash curl make git glibc.apk  && \
     rm glibc.apk && \
     rm -rf /var/cache/apk/*
 
