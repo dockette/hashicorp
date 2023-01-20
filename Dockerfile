@@ -1,4 +1,6 @@
-FROM alpine:3.16 as builder
+FROM debian:bullseye-slim as builder
+
+ARG TARGETARCH
 
 ENV NOMAD_VERSION=1.4.2
 ENV CONSUL_VERSION=1.13.3
@@ -8,13 +10,17 @@ ENV LEVANT_VERSION=0.3.2
 ENV PACKER_VERSION=1.8.4
 ENV WAYPOINT_VERSION=0.10.2
 
-ADD https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip /hashicorp/nomad.zip
-ADD https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip /hashicorp/consul.zip
-ADD https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip /hashicorp/vault.zip
-ADD https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip /hashicorp/terraform.zip
-ADD https://releases.hashicorp.com/levant/${LEVANT_VERSION}/levant_${LEVANT_VERSION}_linux_amd64.zip /hashicorp/levant.zip
-ADD https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip /hashicorp/packer.zip
-ADD https://releases.hashicorp.com/waypoint/${WAYPOINT_VERSION}/waypoint_${WAYPOINT_VERSION}_linux_amd64.zip /hashicorp/waypoint.zip
+ADD https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_${TARGETARCH}.zip /hashicorp/nomad.zip
+ADD https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_${TARGETARCH}.zip /hashicorp/consul.zip
+ADD https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_${TARGETARCH}.zip /hashicorp/vault.zip
+ADD https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${TARGETARCH}.zip /hashicorp/terraform.zip
+ADD https://releases.hashicorp.com/levant/${LEVANT_VERSION}/levant_${LEVANT_VERSION}_linux_${TARGETARCH}.zip /hashicorp/levant.zip
+ADD https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_${TARGETARCH}.zip /hashicorp/packer.zip
+ADD https://releases.hashicorp.com/waypoint/${WAYPOINT_VERSION}/waypoint_${WAYPOINT_VERSION}_linux_${TARGETARCH}.zip /hashicorp/waypoint.zip
+
+RUN apt update && \
+    apt upgrade -y && \
+    apt install -y unzip
 
 RUN unzip -d /hashicorp /hashicorp/nomad.zip
 RUN unzip -d /hashicorp /hashicorp/consul.zip
@@ -25,18 +31,12 @@ RUN unzip -d /hashicorp /hashicorp/packer.zip
 RUN unzip -d /hashicorp /hashicorp/waypoint.zip
 RUN chmod +x /hashicorp/*
 
-FROM alpine:3.16
+FROM debian:bullseye-slim
 
-ENV GLIBC_VERSION=2.35-r0
-
-ADD https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub /etc/apk/keys/sgerrand.rsa.pub
-ADD https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk glibc.apk
-
-RUN apk update && \
-    apk upgrade && \
-    apk --no-cache --force-overwrite add bash curl make git glibc.apk  && \
-    rm glibc.apk && \
-    rm -rf /var/cache/apk/*
+RUN apt update && \
+    apt upgrade -y && \
+    apt install -y bash curl make git && \
+    rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
 COPY --from=builder /hashicorp/nomad /usr/local/bin/nomad
 COPY --from=builder /hashicorp/consul /usr/local/bin/consul
