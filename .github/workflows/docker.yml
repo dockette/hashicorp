@@ -14,5 +14,5 @@ jobs:
     secrets: inherit
     with:
         image: "dockette/hashicorp"
-        tag: "dockette/hashicorp"
+        tag: "latest"
         context: "."
