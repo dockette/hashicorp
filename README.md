@@ -20,8 +20,6 @@ docker run -it --rm dockette/hashicorp lavant deploy app.hcl
 
 **Gitlab CI**
 
-If you whatever reason don't want to use [Vercel for Gitlab](https://vercel.com/gitlab).
-
 ```yml
 stages:
  - deploy
