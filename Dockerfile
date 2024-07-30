@@ -22,14 +22,13 @@ RUN apt update && \
     apt upgrade -y && \
     apt install -y unzip
 
-RUN unzip -d /hashicorp /hashicorp/nomad.zip
-RUN unzip -d /hashicorp /hashicorp/consul.zip
-RUN unzip -d /hashicorp /hashicorp/vault.zip
-RUN unzip -d /hashicorp /hashicorp/terraform.zip
-RUN unzip -d /hashicorp /hashicorp/levant.zip
-RUN unzip -d /hashicorp /hashicorp/packer.zip
-RUN unzip -d /hashicorp /hashicorp/waypoint.zip
-RUN chmod +x /hashicorp/*
+RUN unzip -d /hashicorp/nomad /hashicorp/nomad.zip
+RUN unzip -d /hashicorp/consul /hashicorp/consul.zip
+RUN unzip -d /hashicorp/vault /hashicorp/vault.zip
+RUN unzip -d /hashicorp/terraform /hashicorp/terraform.zip
+RUN unzip -d /hashicorp/levant /hashicorp/levant.zip
+RUN unzip -d /hashicorp/packer /hashicorp/packer.zip
+RUN unzip -d /hashicorp/waypoint /hashicorp/waypoint.zip
 
 FROM debian:bookworm-slim
 
@@ -38,12 +37,12 @@ RUN apt update && \
     apt install -y bash curl make git && \
     rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
-COPY --from=builder /hashicorp/nomad /usr/local/bin/nomad
-COPY --from=builder /hashicorp/consul /usr/local/bin/consul
-COPY --from=builder /hashicorp/vault /usr/local/bin/vault
-COPY --from=builder /hashicorp/terraform /usr/local/bin/terraform
-COPY --from=builder /hashicorp/levant /usr/local/bin/levant
-COPY --from=builder /hashicorp/packer /usr/local/bin/packer
-COPY --from=builder /hashicorp/waypoint /usr/local/bin/waypoint
+COPY --from=builder --chmod=+x /hashicorp/nomad/nomad /usr/local/bin/nomad
+COPY --from=builder --chmod=+x /hashicorp/consul/consul /usr/local/bin/consul
+COPY --from=builder --chmod=+x /hashicorp/vault/vault /usr/local/bin/vault
+COPY --from=builder --chmod=+x /hashicorp/terraform/terraform /usr/local/bin/terraform
+COPY --from=builder --chmod=+x /hashicorp/levant/levant /usr/local/bin/levant
+COPY --from=builder --chmod=+x /hashicorp/packer/packer /usr/local/bin/packer
+COPY --from=builder --chmod=+x /hashicorp/waypoint/waypoint /usr/local/bin/waypoint
 
 ADD --chmod=+x bin/nomad-purge-job /usr/local/bin/nomad-purge-job

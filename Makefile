@@ -1,10 +1,17 @@
+DOCKER_IMAGE?=dockette/hashicorp
+DOCKER_PLATFORM?=linux/amd64,linux/arm64
+
 build:
 	docker buildx \
 		build \
-		--platform linux/amd64,linux/arm64 \
+		--platform ${DOCKER_PLATFORM} \
 		--pull \
-		-t dockette/hashicorp \
+		-t ${DOCKER_IMAGE} \
 		.
 
 test:
-	docker run -it dockette/hashicorp bash
+	docker run \
+		-it \
+		--platform ${DOCKER_PLATFORM} \
+		${DOCKER_IMAGE} \
+		bash
