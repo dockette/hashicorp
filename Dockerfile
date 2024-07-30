@@ -1,14 +1,14 @@
-FROM debian:bullseye-slim as builder
+FROM debian:bookworm-slim as builder
 
 ARG TARGETARCH
 
-ENV NOMAD_VERSION=1.5.6
-ENV CONSUL_VERSION=1.16.0
-ENV VAULT_VERSION=1.14.0
-ENV TERRAFORM_VERSION=1.5.3
-ENV LEVANT_VERSION=0.3.2
-ENV PACKER_VERSION=1.9.1
-ENV WAYPOINT_VERSION=0.11.2
+ENV NOMAD_VERSION=1.8.2
+ENV CONSUL_VERSION=1.19.1
+ENV VAULT_VERSION=1.17.2
+ENV TERRAFORM_VERSION=1.9.2
+ENV LEVANT_VERSION=0.3.3
+ENV PACKER_VERSION=1.11.1
+ENV WAYPOINT_VERSION=0.11.4
 
 ADD https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_${TARGETARCH}.zip /hashicorp/nomad.zip
 ADD https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_${TARGETARCH}.zip /hashicorp/consul.zip
@@ -31,7 +31,7 @@ RUN unzip -d /hashicorp /hashicorp/packer.zip
 RUN unzip -d /hashicorp /hashicorp/waypoint.zip
 RUN chmod +x /hashicorp/*
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 RUN apt update && \
     apt upgrade -y && \
