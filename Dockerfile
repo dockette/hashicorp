@@ -1,13 +1,13 @@
-FROM debian:bookworm-slim as builder
+FROM debian:bookworm-slim AS builder
 
 ARG TARGETARCH
 
-ENV NOMAD_VERSION=1.8.2
-ENV CONSUL_VERSION=1.19.1
-ENV VAULT_VERSION=1.17.2
-ENV TERRAFORM_VERSION=1.9.3
+ENV NOMAD_VERSION=1.8.3
+ENV CONSUL_VERSION=1.19.2
+ENV VAULT_VERSION=1.18.0
+ENV TERRAFORM_VERSION=1.9.6
 ENV LEVANT_VERSION=0.3.3
-ENV PACKER_VERSION=1.11.1
+ENV PACKER_VERSION=1.11.2
 ENV WAYPOINT_VERSION=0.11.4
 
 ADD https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_${TARGETARCH}.zip /hashicorp/nomad.zip
@@ -37,12 +37,12 @@ RUN apt update && \
     apt install -y bash curl make git && \
     rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
-COPY --from=builder --chmod=+x /hashicorp/nomad/nomad /usr/local/bin/nomad
-COPY --from=builder --chmod=+x /hashicorp/consul/consul /usr/local/bin/consul
-COPY --from=builder --chmod=+x /hashicorp/vault/vault /usr/local/bin/vault
-COPY --from=builder --chmod=+x /hashicorp/terraform/terraform /usr/local/bin/terraform
-COPY --from=builder --chmod=+x /hashicorp/levant/levant /usr/local/bin/levant
-COPY --from=builder --chmod=+x /hashicorp/packer/packer /usr/local/bin/packer
-COPY --from=builder --chmod=+x /hashicorp/waypoint/waypoint /usr/local/bin/waypoint
+COPY --from=builder --chmod=0755 /hashicorp/nomad/nomad /usr/local/bin/nomad
+COPY --from=builder --chmod=0755 /hashicorp/consul/consul /usr/local/bin/consul
+COPY --from=builder --chmod=0755 /hashicorp/vault/vault /usr/local/bin/vault
+COPY --from=builder --chmod=0755 /hashicorp/terraform/terraform /usr/local/bin/terraform
+COPY --from=builder --chmod=0755 /hashicorp/levant/levant /usr/local/bin/levant
+COPY --from=builder --chmod=0755 /hashicorp/packer/packer /usr/local/bin/packer
+COPY --from=builder --chmod=0755 /hashicorp/waypoint/waypoint /usr/local/bin/waypoint
 
-ADD --chmod=+x bin/nomad-purge-job /usr/local/bin/nomad-purge-job
+ADD --chmod=0755 bin/nomad-purge-job /usr/local/bin/nomad-purge-job
