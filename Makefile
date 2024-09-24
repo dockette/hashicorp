@@ -1,5 +1,5 @@
 DOCKER_IMAGE?=dockette/hashicorp
-DOCKER_PLATFORM?=linux/amd64,linux/arm64
+DOCKER_PLATFORM?=linux/amd64
 
 build:
 	docker buildx \
