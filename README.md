@@ -12,7 +12,25 @@
 
 ## Usage
 
-**Basic**
+**Bash**
+
+```
+docker run -it --rm dockette/hashicorp bash
+```
+
+**Nomad**
+
+```
+docker run -it --rm dockette/hashicorp nomad
+```
+
+**Consul**
+
+```
+docker run -it --rm dockette/hashicorp consul
+```
+
+**Levant**
 
 ```
 docker run -it --rm dockette/hashicorp lavant deploy app.hcl
