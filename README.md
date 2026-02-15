@@ -49,16 +49,6 @@ deploy:
     - nomad job run app.nomad
 ```
 
-## Development
+## Maintenance
 
-See [how to contribute](https://contributte.org/contributing.html) to this package.
-
-This package is currently maintaining by these authors.
-
-<a href="https://github.com/f3l1x">
-    <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
-</a>
-
------
-
-Consider to [support](https://github.com/sponsors/f3l1x) **f3l1x**. Also thank you for using this package.
+See [how to contribute](https://github.com/dockette/.github/blob/master/CONTRIBUTING.md) to this package. Consider to [support](https://github.com/sponsors/f3l1x) **f3l1x**. Thank you for using this package.
