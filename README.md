@@ -1,6 +1,13 @@
 <h1 align=center>Dockette / Hashicorp</h1>
 
 <p align=center>
+   <a href="https://github.com/dockette/hashicorp/actions"><img src="https://github.com/dockette/hashicorp/actions/workflows/docker.yml/badge.svg" alt="GitHub Actions"></a>
+   <a href="https://hub.docker.com/r/dockette/hashicorp"><img src="https://img.shields.io/docker/pulls/dockette/hashicorp.svg" alt="Docker Hub pulls"></a>
+   <a href="https://github.com/sponsors/f3l1x"><img src="https://img.shields.io/badge/sponsor-GitHub%20Sponsors-ea4aaa" alt="GitHub Sponsors"></a>
+   <a href="https://github.com/orgs/dockette/discussions"><img src="https://img.shields.io/badge/support-discussions-6f42c1" alt="Support/Discussions"></a>
+</p>
+
+<p align=center>
    🐳 Docker image with preinstalled Nomad, Consul, Levant, Vault, Terraform, Packer and Waypoint.
 </p>
 
