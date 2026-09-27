@@ -1,13 +1,13 @@
-FROM debian:bookworm-slim AS builder
+FROM debian:trixie-slim AS builder
 
 ARG TARGETARCH
 
-ENV NOMAD_VERSION=1.11.2
-ENV CONSUL_VERSION=1.22.3
-ENV VAULT_VERSION=1.21.3
-ENV TERRAFORM_VERSION=1.14.5
+ENV NOMAD_VERSION=1.11.3
+ENV CONSUL_VERSION=1.22.7
+ENV VAULT_VERSION=1.21.4
+ENV TERRAFORM_VERSION=1.16.4
 ENV LEVANT_VERSION=0.4.0
-ENV PACKER_VERSION=1.15.0
+ENV PACKER_VERSION=1.16.1
 ENV WAYPOINT_VERSION=0.11.4
 
 ADD https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_${TARGETARCH}.zip /hashicorp/nomad.zip
@@ -30,7 +30,7 @@ RUN unzip -d /hashicorp/levant /hashicorp/levant.zip
 RUN unzip -d /hashicorp/packer /hashicorp/packer.zip
 RUN unzip -d /hashicorp/waypoint /hashicorp/waypoint.zip
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 RUN apt update && \
     apt upgrade -y && \
