@@ -17,33 +17,27 @@
 
 -----
 
+One image with the HashiCorp command line tools. Each tool version is pinned in the `Dockerfile`.
+
+## Features
+
+- Nomad, Consul, Vault, Terraform, Levant, Packer and Waypoint on `debian:trixie-slim`
+- `bash`, `curl`, `make` and `git`
+- `nomad-purge-job` helper script
+- `linux/amd64` and `linux/arm64`
+
 ## Usage
 
-**Bash**
-
-```
+```sh
 docker run -it --rm dockette/hashicorp bash
-```
 
-**Nomad**
-
-```
+# Run a tool
 docker run -it --rm dockette/hashicorp nomad
-```
-
-**Consul**
-
-```
 docker run -it --rm dockette/hashicorp consul
+docker run -it --rm dockette/hashicorp levant deploy app.hcl
 ```
 
-**Levant**
-
-```
-docker run -it --rm dockette/hashicorp lavant deploy app.hcl
-```
-
-**Gitlab CI**
+In GitLab CI:
 
 ```yml
 stages:
@@ -58,9 +52,24 @@ deploy:
 
 ## Versions
 
-The release version is the date in [`VERSION`](VERSION). CI pushes `latest` also as `dockette/hashicorp:<VERSION>`.
-To release, run `make release`, commit and push to `master`.
+| Version | Release |
+|---------|---------|
+| `dockette/hashicorp:YYYY.MM.DD` | release `YYYY.MM.DD` |
+| `dockette/hashicorp:latest` | latest build of `master` |
+
+Releases are listed on [GitHub](https://github.com/dockette/hashicorp/releases).
+
+## Development
+
+```sh
+make build          # build the image
+make test           # print the version of every tool
+make run            # open a shell in the image
+make version        # print VERSION
+make release        # set today's date in VERSION
+```
 
 ## Maintenance
 
-See [how to contribute](https://github.com/dockette/.github/blob/master/CONTRIBUTING.md) to this package. Consider to [support](https://github.com/sponsors/f3l1x) **f3l1x**. Thank you for using this package.
+See [how to contribute](https://github.com/dockette/.github/blob/master/CONTRIBUTING.md) to this package. Consider to
+[support](https://github.com/sponsors/f3l1x) **f3l1x**. Thank you for using this package.
